@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +8,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#f0f0f0"
     tools:context="group53.android53.ImageGallery">
+
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Photo"
         android:id="@+id/btnAddPhoto"
+        android:onClick="AddPhoto"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/btnDeletePhoto"
+        android:onClick="DeletePhoto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="100dp"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:focusable="true"
+        android:clickable="true"
         android:layout_centerHorizontal="true"
-        android:onClick="AddPhoto" />
+        android:layout_below="@+id/btnAddPhoto"
+        android:backgroundTint="#454545" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit/Tag Photo"
+        android:id="@+id/btnETPhoto"
+        android:layout_alignBottom="@+id/btnAddPhoto"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
