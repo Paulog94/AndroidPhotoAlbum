@@ -2,13 +2,13 @@ package group53.android53;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.util.Base64;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 
 /**
  * Used For Storing Photo urls
@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class Photo implements Serializable {
     private String caption;
     private ArrayList<tag> tags;
-    private Bitmap image;
+    private String image;
 
 
     /**
@@ -27,7 +27,7 @@ public class Photo implements Serializable {
      * @param caption
      */
     public Photo(Bitmap b, String caption){
-        this.image = b;
+        image = bitmapToString(b);
         this.caption = caption;
         tags = new ArrayList<tag>();
     }
@@ -36,7 +36,7 @@ public class Photo implements Serializable {
      *Adds Bitmap to photo
      */
     public Photo(Bitmap b){
-        image = b;
+        image = bitmapToString(b);
         caption = "";
         tags = new ArrayList<tag>();
     }
@@ -52,7 +52,9 @@ public class Photo implements Serializable {
     }
     public String getCaption(){return caption;}
 
-    public Bitmap getImage(){return image;}
+    public Bitmap getImage(){
+
+        return stringToBitmap(image);}
 
     public boolean hasTag(String s){
 
@@ -66,5 +68,14 @@ public class Photo implements Serializable {
 
     public ArrayList<tag> getTags(){return tags;}
 
+    private final static String bitmapToString(Bitmap in){
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        in.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        return Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
+    }
+    private final static Bitmap stringToBitmap(String in){
+        byte[] bytes = Base64.decode(in, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
 
 }

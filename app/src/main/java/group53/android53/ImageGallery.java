@@ -63,7 +63,9 @@ public class ImageGallery extends AppCompatActivity {
     }
 
 
+    //Deletes Photos
     public void DeletePhoto(View v){
+        Toast.makeText(ImageGallery.this, "Checked Position:"+gridView.getCheckedItemPosition(), Toast.LENGTH_SHORT).show();
         if(gridView.getCheckedItemPosition()!=-1){
             AlbumList.get(index).getPhotoList().remove(gridView.getCheckedItemPosition());
             gridAdapter.notifyDataSetChanged();
@@ -73,6 +75,7 @@ public class ImageGallery extends AppCompatActivity {
             Toast.makeText(ImageGallery.this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
     }
 
+    //Askes User for permission to access photo Gallery then Accesses Photos
     @SuppressLint("NewApi")
     public void AddPhoto(View view) {
 
@@ -109,6 +112,8 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
+
+    //Used To catch The Result Codes and retrieve their data
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -125,7 +130,6 @@ public class ImageGallery extends AppCompatActivity {
                     AlbumList.get(index).getPhotoList().add(new Photo(newImage));
                     gridAdapter.notifyDataSetChanged();
                     store();
-                    //Toast.makeText(getApplicationContext(), "Add This Photo" + data.getData().toString(), Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     Toast.makeText(getApplicationContext(), "Couldn't get Image", Toast.LENGTH_LONG).show();
                 }
@@ -133,6 +137,7 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
+    //Store Does Not Work
     //Saves function
     public void store() {
         try {
@@ -142,10 +147,12 @@ public class ImageGallery extends AppCompatActivity {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(ImageGallery.this, "Save Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    //Cant Get This To Work
     //Loads Albums
     public void load() {
         FileInputStream fis = null;
@@ -161,13 +168,15 @@ public class ImageGallery extends AppCompatActivity {
                     is.close();
                     fis.close();
                 } catch (ClassNotFoundException e) {
+                    Toast.makeText(ImageGallery.this, "Cannot Create Albums", Toast.LENGTH_SHORT).show();
                     AlbumList = new ArrayList<Album>();
                 }
             } catch (IOException e) {
+                Toast.makeText(ImageGallery.this, "Cannot Read InputStream", Toast.LENGTH_SHORT).show();
                 AlbumList = new ArrayList<Album>();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Toast.makeText(ImageGallery.this, "No FIle Loaded", Toast.LENGTH_SHORT).show();
         }
     }
 
