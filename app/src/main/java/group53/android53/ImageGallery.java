@@ -49,8 +49,9 @@ public class ImageGallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_gallery);
         Bundle b = getIntent().getExtras();
-        AlbumList = (ArrayList<Album>) b.getSerializable("AlbumList");
+        //AlbumList = (ArrayList<Album>) b.getSerializable("AlbumList");
         index = b.getInt("index");
+        load();
 
         gridView = (GridView) findViewById(R.id.gridView);
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, AlbumList.get(index).getPhotoList());

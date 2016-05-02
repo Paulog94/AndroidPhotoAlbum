@@ -86,7 +86,7 @@ public class Albumlist extends AppCompatActivity {
 
         if(listView.getCheckedItemPosition() >= 0){
             Intent intent = new Intent(getApplicationContext(), ImageGallery.class);
-            intent.putExtra("AlbumList", AlbumList);
+            //intent.putExtra("AlbumList", AlbumList);
             int i = listView.getCheckedItemPosition();
             intent.putExtra("index",i);
             startActivity(intent);
@@ -116,6 +116,16 @@ public class Albumlist extends AppCompatActivity {
                 store();
             }
         }
+    }
+
+    //Updates View When the Back button is displayed
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        listView = (ListView) findViewById(R.id.listView);
+        load();
+        adapter = new ArrayAdapter<Album>(this,R.layout.support_simple_spinner_dropdown_item,AlbumList);
+        listView.setAdapter(adapter);
     }
 
     public void store() {
