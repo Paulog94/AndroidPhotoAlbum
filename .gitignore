@@ -1,14 +1,6 @@
-*.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
 # Built application files
 /*/build/
-/.idea
+
 # Crashlytics configuations
 com_crashlytics_export_strings.xml
 
@@ -17,8 +9,6 @@ local.properties
 
 # Gradle generated files
 .gradle/
-**/*.gradle
-**/**/*.gradle
 
 # Signing files
 .signing/
