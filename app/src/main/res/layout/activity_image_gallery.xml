@@ -54,9 +54,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit/Tag Photo"
-        android:id="@+id/btnETPhoto"
+        android:text="View Photo"
+        android:id="@+id/btnViewPhoto"
         android:layout_alignBottom="@+id/btnAddPhoto"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="viewPhoto" />
 
 </RelativeLayout>

@@ -26,6 +26,9 @@ public class tag implements Serializable {
     public String getType(){return type;}
     public String getValue(){return value;}
 
+    public String toString(){
+        return getType()+": "+getValue();
+    }
 
     public boolean equals(tag t){
 

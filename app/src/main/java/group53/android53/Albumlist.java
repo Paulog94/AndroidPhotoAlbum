@@ -52,7 +52,6 @@ public class Albumlist extends AppCompatActivity {
 
         if(listView.getCheckedItemPosition() >= 0){
             Intent intent = new Intent(getApplicationContext(), EditAlbum.class);
-            intent.putExtra("AlbumList", AlbumList);
             String ogName = AlbumList.get(listView.getCheckedItemPosition()).getName();
             intent.putExtra("AlbumName", ogName);
             int i = listView.getCheckedItemPosition();
@@ -67,7 +66,6 @@ public class Albumlist extends AppCompatActivity {
 
     public void Add(View v){
         Intent intent = new Intent(getApplicationContext(),AddAlbum.class);
-        intent.putExtra("AlbumList",AlbumList);
         startActivityForResult(intent,ADD_REQUEST_CODE);
     }
 

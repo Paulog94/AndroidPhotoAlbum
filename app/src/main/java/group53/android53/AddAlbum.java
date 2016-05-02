@@ -32,8 +32,7 @@ public class AddAlbum extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_album);
         edit = (EditText)findViewById(R.id.AddAlbumText);
-        Bundle b = getIntent().getExtras();
-        AlbumList = (ArrayList<Album>) b.getSerializable("AlbumList");
+        load();
     }
 
 
@@ -66,4 +65,32 @@ public class AddAlbum extends AppCompatActivity {
         }
         return false;
     }
+
+    //Loads Albums
+    public void load() {
+        FileInputStream fis = null;
+        try {
+            fis = this.getApplicationContext().openFileInput(filename);
+
+            ObjectInputStream is = null;
+            try {
+                is = new ObjectInputStream(fis);
+
+                try {
+                    AlbumList = (ArrayList<Album>) is.readObject();
+                    is.close();
+                    fis.close();
+                } catch (ClassNotFoundException e) {
+                    Toast.makeText(this, "Cannot Create Albums", Toast.LENGTH_SHORT).show();
+                    AlbumList = new ArrayList<Album>();
+                }
+            } catch (IOException e) {
+                Toast.makeText(this, "Cannot Read InputStream", Toast.LENGTH_SHORT).show();
+                AlbumList = new ArrayList<Album>();
+            }
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, "No FIle Loaded", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

@@ -1,14 +1,11 @@
 package group53.android53;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -19,11 +16,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,7 +23,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.jar.Manifest;
 
 public class ImageGallery extends AppCompatActivity {
 
@@ -56,17 +47,11 @@ public class ImageGallery extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, AlbumList.get(index).getPhotoList());
         gridView.setAdapter(gridAdapter);
-
-
-        Toast.makeText(getApplicationContext(),
-                "Opens " + AlbumList.get(index).getName() + "'s Photo Gallery",
-                Toast.LENGTH_LONG).show();
     }
 
 
     //Deletes Photos
     public void DeletePhoto(View v){
-        Toast.makeText(ImageGallery.this, "Checked Position:"+gridView.getCheckedItemPosition(), Toast.LENGTH_SHORT).show();
         if(gridView.getCheckedItemPosition()!=-1){
             AlbumList.get(index).getPhotoList().remove(gridView.getCheckedItemPosition());
             gridAdapter.notifyDataSetChanged();
@@ -76,10 +61,18 @@ public class ImageGallery extends AppCompatActivity {
             Toast.makeText(ImageGallery.this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
     }
 
+    public void viewPhoto(View v){
+        Intent intent = new Intent(getApplicationContext(),PhotoViewer.class);
+
+        int photoIDX = gridView.getCheckedItemPosition();
+        intent.putExtra("album index",index);
+        intent.putExtra("photo index",photoIDX);
+        startActivity(intent);
+    }
+
     //Askes User for permission to access photo Gallery then Accesses Photos
     @SuppressLint("NewApi")
     public void AddPhoto(View view) {
-
         //Checking For Permission
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -138,7 +131,7 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
-    //Store Does Not Work
+
     //Saves function
     public void store() {
         try {
@@ -152,8 +145,6 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
-
-    //Cant Get This To Work
     //Loads Albums
     public void load() {
         FileInputStream fis = null;
