@@ -56,7 +56,9 @@ public class ImageGallery extends AppCompatActivity {
         if(gridView.getCheckedItemPosition()!=-1){
             AlbumList.get(index).getPhotoList().remove(gridView.getCheckedItemPosition());
             gridAdapter.notifyDataSetChanged();
+            gridView.clearChoices();
             store();
+
         }
         else
             Toast.makeText(ImageGallery.this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();

@@ -56,7 +56,8 @@
         android:contextClickable="false"
         android:choiceMode="singleChoice"
         android:layout_below="@+id/btnAddPhoto"
-        android:layout_above="@+id/btnViewPhoto" />
+        android:layout_above="@+id/btnViewPhoto"
+        android:listSelector="#fc0606" />
 
     <Button
         android:layout_width="wrap_content"

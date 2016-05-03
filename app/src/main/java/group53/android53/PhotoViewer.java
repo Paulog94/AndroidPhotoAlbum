@@ -89,6 +89,7 @@ public class PhotoViewer extends AppCompatActivity {
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
                     remove(TagList.getCheckedItemPosition());
             adapter.notifyDataSetChanged();
+            TagList.clearChoices();
             store();
         }
         else

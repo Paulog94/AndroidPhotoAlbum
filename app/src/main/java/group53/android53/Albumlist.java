@@ -72,10 +72,13 @@ public class Albumlist extends AppCompatActivity {
 
     //Delete ALbum Activity
     public void Delete(View view){
-        if(!AlbumList.isEmpty()) {
+        if(!AlbumList.isEmpty() && listView.getCheckedItemPosition()!=-1) {
             AlbumList.remove(listView.getCheckedItemPosition());
             adapter.notifyDataSetChanged();
+            listView.clearChoices();
+            //Toast.makeText(Albumlist.this, "Checked Item: "+listView.getCheckedItemPosition(), Toast.LENGTH_SHORT).show();
             store();
+
         }
         else{
             Toast.makeText(getApplicationContext(),"No Album Selected",Toast.LENGTH_LONG).show();

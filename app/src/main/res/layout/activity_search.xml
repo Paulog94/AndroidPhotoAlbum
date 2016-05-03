@@ -48,7 +48,8 @@
         android:clickable="false"
         android:id="@+id/S_Photo_grid"
         android:choiceMode="singleChoice"
-        android:layout_below="@+id/btnSearch" />
+        android:layout_below="@+id/btnSearch"
+        android:listSelector="#ff0505" />
 
     <CheckBox
         android:layout_width="wrap_content"
