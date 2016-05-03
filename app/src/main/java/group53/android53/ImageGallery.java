@@ -131,6 +131,15 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        load();
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, AlbumList.get(index).getPhotoList());
+        gridView.setAdapter(gridAdapter);
+    }
+
 
     //Saves function
     public void store() {

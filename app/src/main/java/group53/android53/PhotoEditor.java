@@ -2,11 +2,12 @@ package group53.android53;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,83 +21,42 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class PhotoViewer extends AppCompatActivity {
+public class PhotoEditor extends AppCompatActivity {
     private static final int PHOTO_EDIT_RESULT_CODE = 7;
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
     private int Aindex, Pindex;
-
+    private CheckBox cbLocation;
+    private CheckBox cbPerson;
     private ImageView img;
     private ListView TagList;
-    private TextView caption;
+    private EditText caption;
+    private  EditText tagV;
     ArrayAdapter<tag> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_viewer);
+        setContentView(R.layout.activity_photo_editor);
+        load();
         Bundle b = getIntent().getExtras();
 
         //Loads information Needed
         Aindex = b.getInt("album index");
         Pindex = b.getInt("photo index");
-
-        //If no Photo Was selected to Open
-        if(Pindex == -1){
-            Pindex = 0;
-        }
-        img = (ImageView)findViewById(R.id.imageView);
-        TagList = (ListView)findViewById(R.id.TagList);
-        caption = (TextView)findViewById(R.id.TVcaption);
+        img = (ImageView)findViewById(R.id.img);
+        TagList = (ListView)findViewById(R.id.tags);
+        caption = (EditText) findViewById(R.id.txtEditCaption);
+        tagV = (EditText)findViewById(R.id.txtTagValue);
+        cbLocation =(CheckBox)findViewById(R.id.cbLocation);
+        cbPerson = (CheckBox)findViewById(R.id.cbPerson);
         load();
         setContent();
+
     }
 
-    //Goes to next Photo
-    public void Prev(View v){
-        if(Pindex == 0){
-            Pindex = AlbumList.get(Aindex).getPhotoList().size() - 1;
-            Toast.makeText(PhotoViewer.this, "No more previous photos", Toast.LENGTH_SHORT).show();
-        }else{
-            --Pindex;
-        }
-        setContent();
-    }
-
-    //Goes to prev Photo
-    public void Next(View v){
-        if(Pindex == AlbumList.get(Aindex).getPhotoList().size() - 1){
-            Pindex = 0;
-            Toast.makeText(PhotoViewer.this, "No more next photo, back at start", Toast.LENGTH_SHORT).show();
-        }else{
-            ++Pindex;
-        }
-        setContent();
-    }
-
-    //Edits Photo
-    public void EditPhoto(View v){
-        Intent intent = new Intent(getApplicationContext(),PhotoEditor.class);
-        intent.putExtra("album index",Aindex);
-        intent.putExtra("photo index",Pindex);
-        startActivityForResult(intent,PHOTO_EDIT_RESULT_CODE);
-    }
-
-    //Deletes Tag
-    public void deleteTag(View v){
-        if(TagList.getCheckedItemPosition()!=-1){
-            AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
-                    remove(TagList.getCheckedItemPosition());
-            adapter.notifyDataSetChanged();
-            store();
-        }
-        else
-            Toast.makeText(this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
-    }
-
+    //Sets content
     public void setContent(){
-        //There is a converter inside Photo to convert String Bitmap into real bitmap
-        //Sets image View and Caption
         img.setImageBitmap(AlbumList.get(Aindex).getPhotoList().get(Pindex).getImage());
         caption.setText(AlbumList.get(Aindex).getPhotoList().get(Pindex).getCaption());
 
@@ -104,28 +64,47 @@ public class PhotoViewer extends AppCompatActivity {
         adapter = new ArrayAdapter<tag>(this,R.layout.support_simple_spinner_dropdown_item,
                 AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags());
         TagList.setAdapter(adapter);
-
     }
 
-    //Catches Result onActivityResult
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
+    //Saves Changes
+    public void SaveChanges(View v){
+        AlbumList.get(Aindex).getPhotoList().get(Pindex).editCaption(caption.getText().toString());
+        store();
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
 
-        if (requestCode == PHOTO_EDIT_RESULT_CODE) {
-            if (resultCode == RESULT_OK){
-                load();
-                setContent();
-            }
+    //sets other checkbox to not selected
+    public void checkLocation(View v){
+        if(cbPerson.isChecked()){
+            cbPerson.setChecked(false);
+        }
+    }
+    //Sets other checkbox to not selected
+    public void checkPerson(View v){
+        if(cbLocation.isChecked()){
+            cbLocation.setChecked(false);
         }
     }
 
-    @Override
-    public void onRestart(){
-        super.onRestart();
-        load();
-        setContent();
+    //Adds Tag Button Action
+    public void AddTag(View v) {
+        if (!(cbLocation.isChecked() || cbPerson.isChecked())) {
+            Toast.makeText(PhotoEditor.this, "Select a Tag type to add a tag", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (cbLocation.isChecked() && !tagV.getText().toString().equals("")) {
+            AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
+                    add(new tag("Location", tagV.getText().toString()));
+            adapter.notifyDataSetChanged();
+            return;
+        }
+        if (cbPerson.isChecked() && !tagV.getText().toString().equals("")) {
+            AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
+                    add(new tag("Person", tagV.getText().toString()));
+            adapter.notifyDataSetChanged();
+            return;
+        }
     }
 
     //Saves Albums
