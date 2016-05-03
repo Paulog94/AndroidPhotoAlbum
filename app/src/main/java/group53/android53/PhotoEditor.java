@@ -97,12 +97,14 @@ public class PhotoEditor extends AppCompatActivity {
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
                     add(new tag("Location", tagV.getText().toString()));
             adapter.notifyDataSetChanged();
+            store();
             return;
         }
         if (cbPerson.isChecked() && !tagV.getText().toString().equals("")) {
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
                     add(new tag("Person", tagV.getText().toString()));
             adapter.notifyDataSetChanged();
+            store();
             return;
         }
     }

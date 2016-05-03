@@ -37,8 +37,11 @@ public class View_Searched_Photos extends AppCompatActivity {
     public void setContent() {
         //There is a converter inside Photo to convert String Bitmap into real bitmap
         //Sets image View and Caption
+        String tags = " ";
         img.setImageBitmap(tmpPhotos.get(index).getImage());
-        caption.setText(tmpPhotos.get(index).toString());
+        for(tag t : tmpPhotos.get(index).getTags())
+            tags+="#"+t.getValue()+" ";
+        caption.setText(tmpPhotos.get(index).getCaption()+"\n"+tags);
     }
 
     //Goes to next Photo

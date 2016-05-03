@@ -24,23 +24,15 @@
         android:id="@+id/TVcaption"
          />
 
-    <ScrollView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView2"
+        android:id="@+id/TagList"
+        android:layout_centerHorizontal="true"
+        android:choiceMode="singleChoice"
         android:layout_below="@+id/TVcaption"
-        android:layout_above="@+id/prev">
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/TagList"
-            android:layout_centerHorizontal="true"
-            android:choiceMode="singleChoice"
-            android:layout_below="@+id/TVcaption"
-            android:listSelector="#fb0606"
-            android:layout_above="@+id/prev" />
-    </ScrollView>
+        android:listSelector="#fb0606"
+        android:layout_above="@+id/prev" />
 
     <Button
         android:layout_width="wrap_content"
