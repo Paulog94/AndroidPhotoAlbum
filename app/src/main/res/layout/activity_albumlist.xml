@@ -57,7 +57,8 @@
         android:id="@+id/button2"
         android:layout_below="@+id/listView"
         android:layout_toLeftOf="@+id/button3"
-        android:layout_toStartOf="@+id/button3" />
+        android:layout_toStartOf="@+id/button3"
+        android:onClick="Search"/>
 
     <Button
         android:layout_width="wrap_content"

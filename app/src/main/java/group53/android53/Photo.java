@@ -59,7 +59,16 @@ public class Photo implements Serializable {
     public boolean hasTag(String s){
 
         for(tag t: tags){
-            if(t.getValue().equals(s)){
+            if(t.getValue().contains(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean hasTag(String type,String s){
+
+        for(tag t: tags){
+            if(t.getValue().contains(s)&& t.getType().equals(type)){
                 return true;
             }
         }

@@ -77,6 +77,7 @@ public class ImageGallery extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Moves photo, Start Activity
     public void movePhoto(View v){
         Intent intent = new Intent(getApplicationContext(),MovePhoto.class);
         int Pindex;
@@ -159,6 +160,7 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
+    //Updates on back button press
     @Override
     public void onRestart(){
         super.onRestart();
@@ -167,7 +169,6 @@ public class ImageGallery extends AppCompatActivity {
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, AlbumList.get(index).getPhotoList());
         gridView.setAdapter(gridAdapter);
     }
-
 
     //Saves function
     public void store() {

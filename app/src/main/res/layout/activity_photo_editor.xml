@@ -32,7 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtEditCaption"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:hint="Caption"
+            android:textAlignment="center" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -55,9 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="tag value"
             android:ems="10"
-            android:id="@+id/txtTagValue" />
+            android:id="@+id/txtTagValue"
+            android:hint="Tag Name" />
 
         <Button
             android:layout_width="wrap_content"

@@ -64,11 +64,13 @@ public class Albumlist extends AppCompatActivity {
 
     }
 
+    //Add new Album Activity
     public void Add(View v){
         Intent intent = new Intent(getApplicationContext(),AddAlbum.class);
         startActivityForResult(intent,ADD_REQUEST_CODE);
     }
 
+    //Delete ALbum Activity
     public void Delete(View view){
         if(!AlbumList.isEmpty()) {
             AlbumList.remove(listView.getCheckedItemPosition());
@@ -80,8 +82,8 @@ public class Albumlist extends AppCompatActivity {
         }
     }
 
+    //Open Album Activity
     public void Open(View view){
-
         if(listView.getCheckedItemPosition() >= 0){
             Intent intent = new Intent(getApplicationContext(), ImageGallery.class);
             //intent.putExtra("AlbumList", AlbumList);
@@ -91,6 +93,12 @@ public class Albumlist extends AppCompatActivity {
         }
         else
             Toast.makeText(getApplicationContext(),"No Album Selected",Toast.LENGTH_LONG).show();
+    }
+
+    //Search Photos
+    public void Search(View view){
+        Intent intent = new Intent(getApplicationContext(),Search.class);
+        startActivity(intent);
     }
 
     @Override
@@ -134,7 +142,7 @@ public class Albumlist extends AppCompatActivity {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(Albumlist.this, "Could not Save", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -158,7 +166,7 @@ public class Albumlist extends AppCompatActivity {
                 AlbumList = new ArrayList<Album>();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Toast.makeText(Albumlist.this, "No data found", Toast.LENGTH_SHORT).show();
         }
     }
 
