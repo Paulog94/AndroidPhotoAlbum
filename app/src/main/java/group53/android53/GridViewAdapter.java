@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ */
 public class GridViewAdapter extends ArrayAdapter<Photo> {
 
     private Context context;
@@ -24,6 +27,15 @@ public class GridViewAdapter extends ArrayAdapter<Photo> {
         this.data = data;
     }
 
+    /**
+     * Overrides Array Adapter getView
+     * to fit specifications for App
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
@@ -47,12 +59,19 @@ public class GridViewAdapter extends ArrayAdapter<Photo> {
         for(tag t: item.getTags()){
             tags+="#"+t.getValue()+" ";
         }
+
+        //Sets message displayed as the
+        //Photo's caption and it's tags
         String msg = item.getCaption()+" "+tags;
         holder.imageTitle.setText(msg);
         holder.image.setImageBitmap(item.getImage());
         return row;
     }
 
+    /**
+     * Creates a View Holder for a Text View
+     * and an Image View
+     */
     static class ViewHolder {
         TextView imageTitle;
         ImageView image;

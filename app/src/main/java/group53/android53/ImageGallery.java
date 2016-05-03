@@ -24,6 +24,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Displays Photos and uses their images to
+ * select the Photo object
+ */
 public class ImageGallery extends AppCompatActivity {
 
     public static final int ADD_PHOTO_REQUEST_CODE = 4;
@@ -36,6 +42,12 @@ public class ImageGallery extends AppCompatActivity {
     private GridView gridView;
     private GridViewAdapter gridAdapter;
 
+    /**
+     * Sets Up the image Gallery based on index retrieved
+     * and the AlbumList loaded
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +62,11 @@ public class ImageGallery extends AppCompatActivity {
         gridView.setAdapter(gridAdapter);
     }
 
-
-    //Deletes Photos
+    /**
+     * Delete's Photos
+     *
+     * @param v
+     */
     public void DeletePhoto(View v){
         if(gridView.getCheckedItemPosition()!=-1){
             AlbumList.get(index).getPhotoList().remove(gridView.getCheckedItemPosition());
@@ -64,7 +79,14 @@ public class ImageGallery extends AppCompatActivity {
             Toast.makeText(ImageGallery.this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
     }
 
-    //Photo Slider View
+    /**
+     * Sends user to the Photo Viewer on click
+     * passes the Photo index and Album Index
+     *
+     * Goes to PhotoViewer.java
+     *
+     * @param v
+     */
     public void viewPhoto(View v){
         Intent intent = new Intent(getApplicationContext(),PhotoViewer.class);
         int photoIDX;
@@ -79,7 +101,14 @@ public class ImageGallery extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Moves photo, Start Activity
+    /**
+     * Sends User to Move Photo Activity on click
+     * passes the Photo index and Album Index
+     *
+     * Goes to MovePhoto.java
+     *
+     * @param v
+     */
     public void movePhoto(View v){
         Intent intent = new Intent(getApplicationContext(),MovePhoto.class);
         int Pindex;
@@ -95,7 +124,14 @@ public class ImageGallery extends AppCompatActivity {
 
     }
 
-    //Askes User for permission to access photo Gallery then Accesses Photos
+    /**
+     * Askes User for permission to access photo Gallery then Accesses Photos
+     * Allows User to Add a new Photo
+     *
+     * Launch's phone's image gallery to select an image
+     *
+     * @param view
+     */
     @SuppressLint("NewApi")
     public void AddPhoto(View view) {
         //Checking For Permission
@@ -106,8 +142,10 @@ public class ImageGallery extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, ADD_PHOTO_REQUEST_CODE);
-        } else {
+        }
+        else {
             Toast.makeText(ImageGallery.this, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+
             //For Permission to accesss Phone's external Storage
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -116,7 +154,14 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
-    //For Permission to Access Image Gallery of the Android Phone
+    /**
+     * For Permission to Access Image Gallery of the Android Phone
+     * Sets Permissions based on user response
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == REQUEST_CODE_PERMISSION){
@@ -132,7 +177,15 @@ public class ImageGallery extends AppCompatActivity {
     }
 
 
-    //Used To catch The Result Codes and retrieve their data
+    /**
+     * Used To catch The Result Codes and retrieve their data
+     * Used Add Photo
+     * Used for Move Photo
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -162,7 +215,9 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
-    //Updates on back button press
+    /**
+     * Updates on back button press for Persistence
+     */
     @Override
     public void onRestart(){
         super.onRestart();
@@ -172,7 +227,9 @@ public class ImageGallery extends AppCompatActivity {
         gridView.setAdapter(gridAdapter);
     }
 
-    //Saves function
+    /**
+     * Saves App
+     */
     public void store() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -185,7 +242,9 @@ public class ImageGallery extends AppCompatActivity {
         }
     }
 
-    //Loads Albums
+    /**
+     * Loads Albums
+     */
     public void load() {
         FileInputStream fis = null;
         try {

@@ -1,9 +1,6 @@
 package group53.android53;
 
-
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -11,22 +8,30 @@ import android.widget.EditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Adds a new Album to the app
+ */
 public class AddAlbum extends AppCompatActivity {
 
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
     private EditText edit;
 
+    /**
+     * Sets an Empty edit text
+     * so the user can type a new
+     * album name
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,29 +40,34 @@ public class AddAlbum extends AppCompatActivity {
         load();
     }
 
-    //Button to start Save action and go
-    //back to main Albumlist page
+    /**
+     * Button to start Save action and go
+     * back to main Albumlist page
+     *
+     * @param v
+     */
     public void SaveAlbum(View v){
-        Log.d("Save Album","At the Start");
+
         if(!edit.getText().toString().equals("")&&!RepeatAlbum(edit.getText().toString())){
 
             Album a = new Album(edit.getText().toString());
             Intent returnIntent = new Intent();
             returnIntent.putExtra("New Album",a);
             setResult(Activity.RESULT_OK,returnIntent);
-            //Log.d("Save Album","Inside True");
             finish();
 
         }
         else{
-            Log.d("Save Album","Didnt Work");
             Toast.makeText(getApplicationContext(),"Cannot add duplicate or empty album",Toast.LENGTH_LONG).show();
-            //setResult(Activity.RESULT_CANCELED);
-            //finish();
         }
     }
 
-    //Used to check for repeat Albums
+    /**
+     * Used to check repeat Album names
+     *
+     * @param a
+     * @return
+     */
     public boolean RepeatAlbum(String a){
         for(Album al: AlbumList){
             if(al.getName().equals(a)){
@@ -67,7 +77,9 @@ public class AddAlbum extends AppCompatActivity {
         return false;
     }
 
-    //Loads Albums
+    /**
+     * Loads Album list to compare
+     */
     public void load() {
         FileInputStream fis = null;
         try {

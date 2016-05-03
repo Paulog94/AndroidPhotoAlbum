@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Tag Object
- * Created by Paulo1 on 3/29/2016.
+ * Created by Paulo on 3/29/2016.
  */
 public class tag implements Serializable {
     //Tag type
@@ -23,18 +23,24 @@ public class tag implements Serializable {
             this.value = value;
     }
 
+    /**
+     * Gets tag type
+     * @return
+     */
     public String getType(){return type;}
+
+    /**
+     * Gets tag name
+     * @return
+     */
     public String getValue(){return value;}
 
+    /**
+     * Displays tag type and tag name
+     *
+     * @return
+     */
     public String toString(){
         return getType()+": "+getValue();
-    }
-
-    public boolean equals(tag t){
-
-        if(t.getType().equals(type) && t.getValue().equals(value)){
-            return true;
-        }
-        return false;
     }
 }

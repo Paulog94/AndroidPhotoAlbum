@@ -1,6 +1,5 @@
 package group53.android53;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +19,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ * Used to display photos on image gallery
+ * Allows user to delete tags
+ */
 public class PhotoViewer extends AppCompatActivity {
     private static final int PHOTO_EDIT_RESULT_CODE = 7;
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
@@ -31,6 +35,12 @@ public class PhotoViewer extends AppCompatActivity {
     private TextView caption;
     ArrayAdapter<tag> adapter;
 
+    /**
+     * Sets image view to Photo
+     * and sets Photo's tags to list view
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +63,11 @@ public class PhotoViewer extends AppCompatActivity {
         setContent();
     }
 
-    //Goes to next Photo
+    /**
+     * Goes to previous Photo on the album
+     *
+     * @param v
+     */
     public void Prev(View v){
         if(Pindex == 0){
             Pindex = AlbumList.get(Aindex).getPhotoList().size() - 1;
@@ -64,7 +78,10 @@ public class PhotoViewer extends AppCompatActivity {
         setContent();
     }
 
-    //Goes to prev Photo
+    /**
+     * Goes to next Photo
+     * @param v
+     */
     public void Next(View v){
         if(Pindex == AlbumList.get(Aindex).getPhotoList().size() - 1){
             Pindex = 0;
@@ -75,7 +92,13 @@ public class PhotoViewer extends AppCompatActivity {
         setContent();
     }
 
-    //Edits Photo
+    /**
+     * Edits Photo on click
+     *
+     * Goes to EditPhoto.java
+     *
+     * @param v
+     */
     public void EditPhoto(View v){
         Intent intent = new Intent(getApplicationContext(),PhotoEditor.class);
         intent.putExtra("album index",Aindex);
@@ -83,7 +106,10 @@ public class PhotoViewer extends AppCompatActivity {
         startActivityForResult(intent,PHOTO_EDIT_RESULT_CODE);
     }
 
-    //Deletes Tag
+    /**
+     * Deletes selected tag
+     * @param v
+     */
     public void deleteTag(View v){
         if(TagList.getCheckedItemPosition()!=-1){
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
@@ -96,6 +122,9 @@ public class PhotoViewer extends AppCompatActivity {
             Toast.makeText(this, "Select Tag for Deletion", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Sets the display
+     */
     public void setContent(){
         //There is a converter inside Photo to convert String Bitmap into real bitmap
         //Sets image View and Caption
@@ -109,7 +138,14 @@ public class PhotoViewer extends AppCompatActivity {
 
     }
 
-    //Catches Result onActivityResult
+    /**
+     * Catches activity result on photo editor
+     * resets content
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -123,6 +159,9 @@ public class PhotoViewer extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets content and loads updated info on restart
+     */
     @Override
     public void onRestart(){
         super.onRestart();
@@ -130,7 +169,9 @@ public class PhotoViewer extends AppCompatActivity {
         setContent();
     }
 
-    //Saves Albums
+    /**
+     * Saves Albums
+     */
     public void store() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -143,7 +184,9 @@ public class PhotoViewer extends AppCompatActivity {
         }
     }
 
-    //Loads Albums
+    /**
+     * Loads Albums
+     */
     public void load() {
         FileInputStream fis = null;
         try {

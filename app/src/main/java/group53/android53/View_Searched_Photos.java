@@ -1,6 +1,5 @@
 package group53.android53;
 
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +13,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Photo Slider for Viewed Photos
+ */
 public class View_Searched_Photos extends AppCompatActivity {
 
     private static String filename = "SearchPhotos.bin";
@@ -21,6 +25,12 @@ public class View_Searched_Photos extends AppCompatActivity {
     private static int index;
     ImageView img;
     TextView caption;
+
+    /**
+     * Sets variables to xml
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,9 @@ public class View_Searched_Photos extends AppCompatActivity {
         setContent();
     }
 
-    //Sets textView and ImageView
+    /**
+     * Sets textView and ImageView
+     */
     public void setContent() {
         //There is a converter inside Photo to convert String Bitmap into real bitmap
         //Sets image View and Caption
@@ -44,7 +56,10 @@ public class View_Searched_Photos extends AppCompatActivity {
         caption.setText(tmpPhotos.get(index).getCaption()+"\n"+tags);
     }
 
-    //Goes to next Photo
+    /**
+     * Goes to previous Photo
+     * @param v
+     */
     public void prev(View v){
         if(index == 0){
             index = tmpPhotos.size() - 1;
@@ -55,7 +70,10 @@ public class View_Searched_Photos extends AppCompatActivity {
         setContent();
     }
 
-    //Goes to next Photo
+    /**
+     * Goes to next photo
+     * @param v
+     */
     public void next(View v){
         if(index == tmpPhotos.size() - 1){
             index = 0;
@@ -66,7 +84,9 @@ public class View_Searched_Photos extends AppCompatActivity {
         setContent();
     }
 
-    //Loads Temp images
+    /**
+     * Loads Searched temporary Photo list
+     */
     public void load(){
         FileInputStream fis = null;
         try {

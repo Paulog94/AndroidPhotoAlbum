@@ -20,6 +20,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created By Paulo Garcia and Joshua Cross
+ *
+ * Albumlist page activity:
+ * implements a list of albums
+ */
 public class Albumlist extends AppCompatActivity {
 
     private static final int  ADD_REQUEST_CODE = 1;
@@ -27,14 +33,15 @@ public class Albumlist extends AppCompatActivity {
 
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
-    private Button btnAdd;
-    private Button btnEdit;
-    private Button btnDelete;
+
     private ListView listView;
     ArrayAdapter<Album> adapter;
 
-    static int index = -1;
-
+    /**
+     * Displays saved Albums on creation
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +54,19 @@ public class Albumlist extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Launches Edit activity when the Edit button is clicked
+     *
+     * Goes to EditAlbum.java
+     *
+     * @param view
+     */
     public void Edit(View view){
-        Log.d("Edit","Index: "+listView.getCheckedItemPosition());
 
+        //Used to determine if an item is clicked or not
+        //Goes to EditAlbum.java
         if(listView.getCheckedItemPosition() >= 0){
+
             Intent intent = new Intent(getApplicationContext(), EditAlbum.class);
             String ogName = AlbumList.get(listView.getCheckedItemPosition()).getName();
             intent.putExtra("AlbumName", ogName);
@@ -64,19 +80,30 @@ public class Albumlist extends AppCompatActivity {
 
     }
 
-    //Add new Album Activity
+    /**
+     * Adds a new Album to the app
+     *
+     * Goes to AddAlbum.java
+     *
+     * @param v
+     */
     public void Add(View v){
         Intent intent = new Intent(getApplicationContext(),AddAlbum.class);
         startActivityForResult(intent,ADD_REQUEST_CODE);
     }
 
-    //Delete ALbum Activity
+    /**
+     * Deletes Selected ALbum
+     *
+     * @param view
+     */
     public void Delete(View view){
+
+        //Clears selection after deletion
         if(!AlbumList.isEmpty() && listView.getCheckedItemPosition()!=-1) {
             AlbumList.remove(listView.getCheckedItemPosition());
             adapter.notifyDataSetChanged();
             listView.clearChoices();
-            //Toast.makeText(Albumlist.this, "Checked Item: "+listView.getCheckedItemPosition(), Toast.LENGTH_SHORT).show();
             store();
 
         }
@@ -85,11 +112,17 @@ public class Albumlist extends AppCompatActivity {
         }
     }
 
-    //Open Album Activity
+    /**
+     * Opens Album and displays its images
+     * Goes to ImageGallery.java
+     *
+     * @param view
+     */
     public void Open(View view){
+        //Checks if there is a selected item
         if(listView.getCheckedItemPosition() >= 0){
+
             Intent intent = new Intent(getApplicationContext(), ImageGallery.class);
-            //intent.putExtra("AlbumList", AlbumList);
             int i = listView.getCheckedItemPosition();
             intent.putExtra("index",i);
             startActivity(intent);
@@ -98,12 +131,28 @@ public class Albumlist extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"No Album Selected",Toast.LENGTH_LONG).show();
     }
 
-    //Search Photos
+    /**
+     * Launches Search Activity to search for tags
+     *
+     * Goes to Search.java
+     *
+     * @param view
+     */
     public void Search(View view){
         Intent intent = new Intent(getApplicationContext(),Search.class);
         startActivity(intent);
     }
 
+    /**
+     * Returns Data from activity launches
+     * Identifies activity from request codes
+     *
+     * Used for AddAlbum.java and EditAlbum.java
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -127,7 +176,11 @@ public class Albumlist extends AppCompatActivity {
         }
     }
 
-    //Updates View When the Back button is displayed
+    /**
+     * Enables Persistance once back button is clicked
+     * Albumlist will be automatically updated on back
+     *
+     */
     @Override
     public void onRestart(){
         super.onRestart();
@@ -137,6 +190,9 @@ public class Albumlist extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    /**
+     * Allows app to save data
+     */
     public void store() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -149,6 +205,9 @@ public class Albumlist extends AppCompatActivity {
         }
     }
 
+    /**
+     * Allows app to load data
+     */
     public void load(){
         FileInputStream fis = null;
         try {

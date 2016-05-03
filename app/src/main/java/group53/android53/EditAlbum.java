@@ -15,12 +15,24 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Allows User to edit Album name
+ */
 public class EditAlbum extends AppCompatActivity {
 
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
     private EditText edit;
     private int index;
+
+    /**
+     * Displays page on creation
+     * edit text is set to selected album's name
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +47,14 @@ public class EditAlbum extends AppCompatActivity {
         Log.v("Edit","original Index: "+index);
     }
 
+    /**
+     * Once Edit button is clicked,
+     * the function sends the new Album name,
+     * along with its index back to it's parent activity.
+     *
+     * @param v
+     */
     public void editName(View v){
-        //Toast.makeText(getApplicationContext(),"Cannot edit duplicate or empty album name",Toast.LENGTH_LONG).show();
 
         if(!edit.getText().toString().equals("") && !RepeatAlbum(edit.getText().toString())){
 
@@ -52,6 +70,13 @@ public class EditAlbum extends AppCompatActivity {
 
     }
 
+    /**
+     * A check to see if a
+     * name is already taken on the album list
+     *
+     * @param a Name to check
+     * @return
+     */
     public boolean RepeatAlbum(String a){
         for(Album al: AlbumList){
             if(al.getName().equals(a)){
@@ -61,7 +86,10 @@ public class EditAlbum extends AppCompatActivity {
         return false;
     }
 
-    //Loads Albums
+    /**
+     * Loads Album list to compare the String name to
+     *
+     */
     public void load() {
         FileInputStream fis = null;
         try {

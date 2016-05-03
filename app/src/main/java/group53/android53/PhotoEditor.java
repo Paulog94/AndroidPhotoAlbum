@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -21,6 +20,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Used to Edit Photos Captions and add tags
+ */
 public class PhotoEditor extends AppCompatActivity {
     private static final int PHOTO_EDIT_RESULT_CODE = 7;
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
@@ -34,6 +38,13 @@ public class PhotoEditor extends AppCompatActivity {
     private  EditText tagV;
     ArrayAdapter<tag> adapter;
 
+    /**
+     * Sets an image based on the selected Photo's image
+     * Sets Caption to be edited if any
+     * Sets Tags to a list view if any tags are available
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +66,9 @@ public class PhotoEditor extends AppCompatActivity {
 
     }
 
-    //Sets content
+    /**
+     * Sets Content to be viewed
+     */
     public void setContent(){
         img.setImageBitmap(AlbumList.get(Aindex).getPhotoList().get(Pindex).getImage());
         caption.setText(AlbumList.get(Aindex).getPhotoList().get(Pindex).getCaption());
@@ -66,7 +79,12 @@ public class PhotoEditor extends AppCompatActivity {
         TagList.setAdapter(adapter);
     }
 
-    //Saves Changes
+    /**
+     * Saves Changes to caption
+     * and sends user back to parent activity
+     *
+     * @param v
+     */
     public void SaveChanges(View v){
         AlbumList.get(Aindex).getPhotoList().get(Pindex).editCaption(caption.getText().toString());
         store();
@@ -74,25 +92,45 @@ public class PhotoEditor extends AppCompatActivity {
         finish();
     }
 
-    //sets other checkbox to not selected
+    /**
+     * Location check sets
+     * person checkbox to not selected
+     * @param v
+     */
     public void checkLocation(View v){
         if(cbPerson.isChecked()){
             cbPerson.setChecked(false);
         }
     }
-    //Sets other checkbox to not selected
+
+    /**
+     * Person check sets location
+     * checkbox to not selected
+     *
+     * @param v
+     */
     public void checkPerson(View v){
         if(cbLocation.isChecked()){
             cbLocation.setChecked(false);
         }
     }
 
-    //Adds Tag Button Action
+    /**
+     * Adds Tag on button click
+     * Tag type depends on which checkbox is clicked
+     * Checkbox must be clicked
+     * Tag cannot repeat value and type or be an empty string
+     *
+     * @param v
+     */
     public void AddTag(View v) {
+
+        //Checks if a checkbox is selected, if not desplay usage message
         if (!(cbLocation.isChecked() || cbPerson.isChecked())) {
             Toast.makeText(PhotoEditor.this, "Select a Tag type to add a tag", Toast.LENGTH_SHORT).show();
             return;
         }
+        //If Location box is clicked define type as location
         if (cbLocation.isChecked() &&
                 !tagV.getText().toString().equals("") &&
                 !RepeatTag("location",tagV.getText().toString()))
@@ -103,6 +141,7 @@ public class PhotoEditor extends AppCompatActivity {
             store();
             return;
         }
+        //If Person box is clicked define type as person
         else if (cbPerson.isChecked() &&
                 !tagV.getText().toString().equals("") &&
                 !RepeatTag("person",tagV.getText().toString()))
@@ -118,6 +157,13 @@ public class PhotoEditor extends AppCompatActivity {
         }
     }
 
+    /**
+     * A boolean check to see if Photo has tag already
+     *
+     * @param type Location or Person
+     * @param a Value
+     * @return
+     */
     public boolean RepeatTag(String type,String a){
         for(tag t: AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags()){
             if(t.getValue().equals(a) && t.getType().equals(type)){
@@ -127,7 +173,9 @@ public class PhotoEditor extends AppCompatActivity {
         return false;
     }
 
-    //Saves Albums
+    /**
+     * Saves albums
+     */
     public void store() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -140,7 +188,9 @@ public class PhotoEditor extends AppCompatActivity {
         }
     }
 
-    //Loads Albums
+    /**
+     * Loads Albums
+     */
     public void load() {
         FileInputStream fis = null;
         try {

@@ -18,6 +18,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Allows user to Search entire photo album
+ * for photos based on tag type, or just the
+ * tag value alone
+ */
 public class Search extends AppCompatActivity {
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
@@ -29,6 +36,11 @@ public class Search extends AppCompatActivity {
     private CheckBox cbPerson;
     private EditText txtsearch;
 
+    /**
+     * sets variables
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +53,24 @@ public class Search extends AppCompatActivity {
         tmpPhotos = new ArrayList<>();
     }
 
-    //Sets the Gallery
+    /**
+     * Sets the Gallery
+     */
     public void setGallery(){
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, tmpPhotos);
         gridView.setAdapter(gridAdapter);
     }
 
 
-    //Searches For Photos
+    /**
+     * Searches photo on click
+     * takes the search query from user and goes through every photo tag list,
+     * if the query is found and the tag type is matched, or not required,
+     * photo is added to the temp photo list
+     * Gallery is set if photos are found
+     *
+     * @param v
+     */
     public void SearchPhotos(View v){
         String query = txtsearch.getText().toString();
         tmpPhotos.clear();
@@ -86,6 +108,7 @@ public class Search extends AppCompatActivity {
                 }
             }
         }
+        //Displays no photos found if theres an empty list
         if(tmpPhotos.isEmpty()){
             Toast.makeText(Search.this, "No photos found", Toast.LENGTH_SHORT).show();
         }
@@ -93,7 +116,13 @@ public class Search extends AppCompatActivity {
         setGallery();
     }
 
-    //Opens Searched Photo
+    /**
+     * Allows User to view the selected searched Photo on button click
+     *
+     * Goes to View_Searched_Photos.java
+     *
+     * @param v
+     */
     public void openPhoto(View v){
         int index = 0;
         if(!tmpPhotos.isEmpty()) {
@@ -107,20 +136,10 @@ public class Search extends AppCompatActivity {
         }
     }
 
-    //Saves
-    public void store() {
-        try {
-            FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(AlbumList);
-            oos.close();
-            fos.close();
-        } catch (IOException e) {
-            Toast.makeText(this, "Could not Save", Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    //Loads
+    /**
+     * Loads Photo Albums
+     */
     public void load(){
         FileInputStream fis = null;
         try {
@@ -145,7 +164,10 @@ public class Search extends AppCompatActivity {
         }
     }
 
-    //Stores Temp Photos
+    /**
+     * Stores temp Photos so
+     * View Searched Photos can access them
+     */
     public void storetmp() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(tmpfilename, Context.MODE_PRIVATE);

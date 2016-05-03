@@ -16,6 +16,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Paulo Garcia and Joshua Cross
+ *
+ * Allows User to move selected Photo
+ * to a new Album
+ */
 public class MovePhoto extends AppCompatActivity {
 
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
@@ -24,6 +30,12 @@ public class MovePhoto extends AppCompatActivity {
     ArrayAdapter<Album> adapter;
     private int oAlbum, Pindex,nAlbum;
 
+    /**
+     * Sets List View of Albums for photo to be moved to
+     * Obtains old Album index, and photo index
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +53,14 @@ public class MovePhoto extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    //Moves Photo
+    /**
+     * Moves Photo on button click
+     * Array list selected album adds the
+     * photo, then the old album removes the photo
+     * Saves the result
+     * App goes back to image gallery
+     * @param v
+     */
     public void Move(View v){
         if(listView.getCheckedItemPosition()>-1){
             nAlbum = listView.getCheckedItemPosition();
@@ -61,7 +80,9 @@ public class MovePhoto extends AppCompatActivity {
             Toast.makeText(MovePhoto.this, "Select an Album to move the Photo", Toast.LENGTH_SHORT).show();
     }
 
-    //Save Albums
+    /**
+     * Save Albums
+     */
     public void store() {
         try {
             FileOutputStream fos = this.getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -74,7 +95,9 @@ public class MovePhoto extends AppCompatActivity {
         }
     }
 
-    //Loads Albums
+    /**
+     * Loads Albums for the List View
+     */
     public void load() {
         FileInputStream fis = null;
         try {
