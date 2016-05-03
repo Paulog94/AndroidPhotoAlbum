@@ -31,7 +31,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".PhotoViewer" />
-        <activity android:name=".PhotoEditor"></activity>
+        <activity android:name=".PhotoEditor" />
+        <activity android:name=".MovePhoto"></activity>
     </application>
 
 </manifest>

@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/btnDeletePhoto"
-        android:textSize="25dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -28,7 +27,6 @@
         android:layout_alignBottom="@+id/btnDeletePhoto"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="25dp"
         android:onClick="Add" />
 
     <Button
@@ -36,7 +34,6 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:id="@+id/button3"
-        android:textSize="25dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="Edit" />
@@ -60,8 +57,7 @@
         android:id="@+id/button2"
         android:layout_below="@+id/listView"
         android:layout_toLeftOf="@+id/button3"
-        android:layout_toStartOf="@+id/button3"
-        android:textSize="25dp" />
+        android:layout_toStartOf="@+id/button3" />
 
     <Button
         android:layout_width="wrap_content"
@@ -73,6 +69,5 @@
         android:layout_below="@+id/listView"
         android:layout_alignLeft="@+id/btnDeletePhoto"
         android:layout_alignStart="@+id/btnDeletePhoto"
-        android:textSize="25dp"
         android:onClick="Open" />
 </RelativeLayout>

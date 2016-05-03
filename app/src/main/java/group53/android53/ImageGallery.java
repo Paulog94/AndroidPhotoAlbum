@@ -28,6 +28,7 @@ public class ImageGallery extends AppCompatActivity {
 
     public static final int ADD_PHOTO_REQUEST_CODE = 4;
     public static final int REQUEST_CODE_PERMISSION = 5;
+    public static final int MOVE_PHOTO_REQUEST_CODE = 6;
 
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
@@ -61,13 +62,34 @@ public class ImageGallery extends AppCompatActivity {
             Toast.makeText(ImageGallery.this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
     }
 
+    //Photo Slider View
     public void viewPhoto(View v){
         Intent intent = new Intent(getApplicationContext(),PhotoViewer.class);
-
-        int photoIDX = gridView.getCheckedItemPosition();
+        int photoIDX;
+        if(!(gridView.getCheckedItemPosition()==-1)) {
+            photoIDX = gridView.getCheckedItemPosition();
+        }
+        else{
+            photoIDX = 0;
+        }
         intent.putExtra("album index",index);
         intent.putExtra("photo index",photoIDX);
         startActivity(intent);
+    }
+
+    public void movePhoto(View v){
+        Intent intent = new Intent(getApplicationContext(),MovePhoto.class);
+        int Pindex;
+        if(!(gridView.getCheckedItemPosition()==-1)) {
+            Pindex = gridView.getCheckedItemPosition();
+            intent.putExtra("album index",index);
+            intent.putExtra("photo index",Pindex);
+            startActivityForResult(intent,MOVE_PHOTO_REQUEST_CODE);
+        }
+        else{
+            Toast.makeText(ImageGallery.this, "Select a photo to move", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     //Askes User for permission to access photo Gallery then Accesses Photos
@@ -129,6 +151,12 @@ public class ImageGallery extends AppCompatActivity {
                 }
             }
         }
+        if(requestCode == MOVE_PHOTO_REQUEST_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                load();
+                gridAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
@@ -150,7 +178,7 @@ public class ImageGallery extends AppCompatActivity {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            Toast.makeText(ImageGallery.this, "Save Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -169,15 +197,15 @@ public class ImageGallery extends AppCompatActivity {
                     is.close();
                     fis.close();
                 } catch (ClassNotFoundException e) {
-                    Toast.makeText(ImageGallery.this, "Cannot Create Albums", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Cannot Create Albums", Toast.LENGTH_SHORT).show();
                     AlbumList = new ArrayList<Album>();
                 }
             } catch (IOException e) {
-                Toast.makeText(ImageGallery.this, "Cannot Read InputStream", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cannot Read InputStream", Toast.LENGTH_SHORT).show();
                 AlbumList = new ArrayList<Album>();
             }
         } catch (FileNotFoundException e) {
-            Toast.makeText(ImageGallery.this, "No FIle Loaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No FIle Loaded", Toast.LENGTH_SHORT).show();
         }
     }
 

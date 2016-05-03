@@ -35,6 +35,7 @@ public class PhotoViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_viewer);
+
         Bundle b = getIntent().getExtras();
 
         //Loads information Needed
@@ -91,7 +92,7 @@ public class PhotoViewer extends AppCompatActivity {
             store();
         }
         else
-            Toast.makeText(this, "Select Photo for Deletion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Select Tag for Deletion", Toast.LENGTH_SHORT).show();
     }
 
     public void setContent(){

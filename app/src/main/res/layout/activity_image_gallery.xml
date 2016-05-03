@@ -60,4 +60,14 @@
         android:layout_centerHorizontal="true"
         android:onClick="viewPhoto" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_below="@+id/gridView"
+        android:text="Move Photo"
+        android:id="@+id/btnMovePhoto"
+        android:onClick="movePhoto"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
