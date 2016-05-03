@@ -33,7 +33,8 @@
         <activity android:name=".PhotoViewer" />
         <activity android:name=".PhotoEditor" />
         <activity android:name=".MovePhoto" />
-        <activity android:name=".Search"></activity>
+        <activity android:name=".Search" />
+        <activity android:name=".View_Searched_Photos"></activity>
     </application>
 
 </manifest>

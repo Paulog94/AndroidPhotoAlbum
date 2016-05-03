@@ -21,7 +21,10 @@
         android:onClick="AddPhoto"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="10dp"
+        android:layout_toLeftOf="@+id/btnMovePhoto"
+        android:layout_toStartOf="@+id/btnMovePhoto" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,7 +34,10 @@
         android:onClick="DeletePhoto"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="10dp"
+        android:layout_toRightOf="@+id/btnMovePhoto"
+        android:layout_toEndOf="@+id/btnMovePhoto" />
 
     <GridView
         android:id="@+id/gridView"
@@ -46,28 +52,29 @@
         android:focusable="false"
         android:clickable="false"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/btnAddPhoto"
         android:backgroundTint="#454545"
         android:contextClickable="false"
-        android:choiceMode="singleChoice" />
+        android:choiceMode="singleChoice"
+        android:layout_below="@+id/btnAddPhoto"
+        android:layout_above="@+id/btnViewPhoto" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Photo"
         android:id="@+id/btnViewPhoto"
-        android:layout_alignBottom="@+id/btnAddPhoto"
-        android:layout_centerHorizontal="true"
-        android:onClick="viewPhoto" />
+        android:onClick="viewPhoto"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5sp"
-        android:layout_below="@+id/gridView"
         android:text="Move Photo"
         android:id="@+id/btnMovePhoto"
         android:onClick="movePhoto"
+        android:textSize="10dp"
+        android:layout_above="@+id/gridView"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

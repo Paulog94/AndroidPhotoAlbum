@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Search extends AppCompatActivity {
     private static ArrayList<Album> AlbumList = new ArrayList<Album>();
     private static String filename = "AlbumList.bin";
+    private static String tmpfilename = "SearchPhotos.bin";
     private static ArrayList<Photo> tmpPhotos;
     private GridView gridView;
     private static GridViewAdapter gridAdapter;
@@ -40,13 +41,14 @@ public class Search extends AppCompatActivity {
         tmpPhotos = new ArrayList<>();
     }
 
+    //Sets the Gallery
     public void setGallery(){
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, tmpPhotos);
         gridView.setAdapter(gridAdapter);
-        Toast.makeText(Search.this, "Set Adapter", Toast.LENGTH_SHORT).show();
     }
 
 
+    //Searches For Photos
     public void SearchPhotos(View v){
         String query = txtsearch.getText().toString();
         tmpPhotos.clear();
@@ -93,7 +95,16 @@ public class Search extends AppCompatActivity {
 
     //Opens Searched Photo
     public void openPhoto(View v){
-        
+        int index = 0;
+        if(!tmpPhotos.isEmpty()) {
+            if(gridView.getCheckedItemPosition()!=-1){
+                index = gridView.getCheckedItemPosition();
+            }
+            Intent intent = new Intent(this.getApplicationContext(),View_Searched_Photos.class);
+            intent.putExtra("index",index);
+            storetmp();
+            startActivity(intent);
+        }
     }
 
     //Saves
@@ -134,4 +145,16 @@ public class Search extends AppCompatActivity {
         }
     }
 
+    //Stores Temp Photos
+    public void storetmp() {
+        try {
+            FileOutputStream fos = this.getApplicationContext().openFileOutput(tmpfilename, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(tmpPhotos);
+            oos.close();
+            fos.close();
+        } catch (IOException e) {
+            Toast.makeText(this, "Could not Save", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

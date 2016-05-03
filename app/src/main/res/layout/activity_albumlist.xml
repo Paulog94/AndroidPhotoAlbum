@@ -14,10 +14,10 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/btnDeletePhoto"
+        android:onClick="Delete"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="Delete" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,9 +34,10 @@
         android:layout_height="wrap_content"
         android:text="Edit"
         android:id="@+id/button3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="Edit" />
+        android:onClick="Edit"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnAdd"
+        android:layout_toEndOf="@+id/btnAdd" />
 
     <ListView
         android:layout_width="match_parent"
@@ -46,29 +47,25 @@
         android:layout_centerHorizontal="true"
         android:choiceMode="singleChoice"
         android:contextClickable="false"
-        android:listSelector="#f60707" />
+        android:listSelector="#f60707"
+        android:layout_above="@+id/button3" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:text="Search"
         android:id="@+id/button2"
-        android:layout_below="@+id/listView"
-        android:layout_toLeftOf="@+id/button3"
-        android:layout_toStartOf="@+id/button3"
-        android:onClick="Search"/>
+        android:onClick="Search"
+        android:layout_above="@+id/listView"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:text="Open"
         android:id="@+id/btnOpen"
-        android:layout_below="@+id/listView"
-        android:layout_alignLeft="@+id/btnDeletePhoto"
-        android:layout_alignStart="@+id/btnDeletePhoto"
-        android:onClick="Open" />
+        android:onClick="Open"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button3"
+        android:layout_toEndOf="@+id/button3" />
 </RelativeLayout>
