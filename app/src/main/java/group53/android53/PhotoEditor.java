@@ -93,20 +93,38 @@ public class PhotoEditor extends AppCompatActivity {
             Toast.makeText(PhotoEditor.this, "Select a Tag type to add a tag", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (cbLocation.isChecked() && !tagV.getText().toString().equals("")) {
+        if (cbLocation.isChecked() &&
+                !tagV.getText().toString().equals("") &&
+                !RepeatTag("location",tagV.getText().toString()))
+        {
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
                     add(new tag("Location", tagV.getText().toString()));
             adapter.notifyDataSetChanged();
             store();
             return;
         }
-        if (cbPerson.isChecked() && !tagV.getText().toString().equals("")) {
+        else if (cbPerson.isChecked() &&
+                !tagV.getText().toString().equals("") &&
+                !RepeatTag("person",tagV.getText().toString()))
+        {
             AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags().
                     add(new tag("Person", tagV.getText().toString()));
             adapter.notifyDataSetChanged();
             store();
             return;
         }
+        else{
+            Toast.makeText(PhotoEditor.this, "Cannot have an empty or repeated tag", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean RepeatTag(String type,String a){
+        for(tag t: AlbumList.get(Aindex).getPhotoList().get(Pindex).getTags()){
+            if(t.getValue().equals(a) && t.getType().equals(type)){
+                return true;
+            }
+        }
+        return false;
     }
 
     //Saves Albums

@@ -35,7 +35,8 @@ public class AddAlbum extends AppCompatActivity {
         load();
     }
 
-
+    //Button to start Save action and go
+    //back to main Albumlist page
     public void SaveAlbum(View v){
         Log.d("Save Album","At the Start");
         if(!edit.getText().toString().equals("")&&!RepeatAlbum(edit.getText().toString())){
@@ -56,7 +57,7 @@ public class AddAlbum extends AppCompatActivity {
         }
     }
 
-
+    //Used to check for repeat Albums
     public boolean RepeatAlbum(String a){
         for(Album al: AlbumList){
             if(al.getName().equals(a)){
